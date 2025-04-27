@@ -1,28 +1,33 @@
-const apiKey = 'ТВОЯ_API_КЛЮЧ'; // заміни на свій справжній API ключ
-const city = 'Kyiv'; // <-- тепер Київ
-const button = document.getElementById('getWeatherBtn');
-const weatherDiv = document.getElementById('weatherInfo');
+document.addEventListener('DOMContentLoaded', () => {
+    const fetchWeatherButton = document.getElementById('fetchWeather');
+    const weatherDataDiv = document.getElementById('weatherData');
+    const apiKey = '667971076cc534cec10b7fa11dcb8f48'; // Замініть на свій реальний API ключ
 
-button.addEventListener('click', () => {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=ua`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Помилка при завантаженні даних');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const temperature = data.main.temp;
-            const humidity = data.main.humidity;
-            const windSpeed = data.wind.speed;
+    fetchWeatherButton.addEventListener('click', () => {
+        const city = 'London';
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`; // Додано &units=metric для отримання температури в градусах Цельсія
 
-            weatherDiv.innerHTML = `
-        <p><strong>Температура:</strong> ${temperature}°C</p>
-        <p><strong>Вологість:</strong> ${humidity}%</p>
-        <p><strong>Швидкість вітру:</strong> ${windSpeed} м/с</p>
-      `;
-        })
-        .catch(error => {
-            weatherDiv.innerHTML = `<p>Сталася помилка: ${error.message}</p>`;
-        });
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP помилка! статус: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const temperature = data.main.temp;
+                const humidity = data.main.humidity;
+                const windSpeed = data.wind.speed;
+
+                weatherDataDiv.innerHTML = `
+                    <p>Температура: ${temperature}°C</p>
+                    <p>Вологість: ${humidity}%</p>
+                    <p>Швидкість вітру: ${windSpeed} м/с</p>
+                `;
+            })
+            .catch(error => {
+                console.error('Помилка отримання даних про погоду:', error);
+                weatherDataDiv.textContent = 'Не вдалося отримати дані про погоду.';
+            });
+    });
 });
