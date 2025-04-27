@@ -1,6 +1,6 @@
 {
-  "name": "LB5",
   "version": "1.0.0",
+  "name": "lb5",
   "description": "",
   "main": "index.js",
   "scripts": {
