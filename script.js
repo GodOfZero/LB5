@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const apiKey = '667971076cc534cec10b7fa11dcb8f48'; // Замініть на свій реальний API ключ
 
     fetchWeatherButton.addEventListener('click', () => {
-        const city = 'London';
+        const city = 'Kyiv';
         const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`; // Додано &units=metric для отримання температури в градусах Цельсія
 
         fetch(apiUrl)
